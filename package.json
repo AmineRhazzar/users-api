@@ -6,7 +6,12 @@
   "scripts": {
     "start": "node ./dist/index.js",
     "dev": "nodemon ./src/index.ts",
+    "test": "jest",
     "build": "tsc -p ."
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": ["/node_modules/"]
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
