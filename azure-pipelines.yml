@@ -11,7 +11,7 @@ resources:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '38a1b355-3cf5-4b58-be4b-2ea98b681098'
-  imageRepository: 'usersapi'
+  imageRepository: 'users-api'
   containerRegistry: 'mrhazzar.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
@@ -69,22 +69,30 @@ stages:
 
 
 
+- stage: Building Docker image
+  displayName: Building/pushing docker image stage
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - checkout: none
+    - task: DownloadBuildArtifacts@1
+      displayName: Downloading build artifact
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'webapp'
+        downloadPath: '$(System.DefaultWorkingDirectory)'
+        extractTars: true
 
-
-# - stage: Building Docker image
-#   displayName: Building/pushing docker image stage
-#   jobs:
-#   - job: Build
-#     displayName: Build
-#     pool:
-#       vmImage: $(vmImageName)
-#     steps:
-#     - task: Docker@2
-#       displayName: Build and push an image to container registry
-#       inputs:
-#         command: buildAndPush
-#         repository: $(imageRepository)
-#         dockerfile: $(dockerfilePath)
-#         containerRegistry: $(dockerRegistryServiceConnection)
-#         tags: |
-#           $(tag)
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
