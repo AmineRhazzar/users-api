@@ -92,7 +92,7 @@ stages:
       inputs:
         command: buildAndPush
         repository: $(imageRepository)
-        dockerfile: $(System.DefaultWorkingDirectory)/webapp/webapp/Dockerfile
+        dockerfile: $(System.DefaultWorkingDirectory)/Dockerfile
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
