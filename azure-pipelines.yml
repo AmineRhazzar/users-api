@@ -13,7 +13,6 @@ variables:
   dockerRegistryServiceConnection: '38a1b355-3cf5-4b58-be4b-2ea98b681098'
   imageRepository: 'users-api'
   containerRegistry: 'mrhazzar.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
 
   # Agent VM image name
@@ -93,7 +92,7 @@ stages:
       inputs:
         command: buildAndPush
         repository: $(imageRepository)
-        dockerfile: $(System.DefaultWorkingDirectory)/extracted_tars/Dockerfile
+        dockerfile: $(System.DefaultWorkingDirectory)/extracted_tars/webapp/Dockerfile
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
