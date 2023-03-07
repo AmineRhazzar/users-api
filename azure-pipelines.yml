@@ -85,14 +85,23 @@ stages:
         artifactName: 'webapp'
         downloadPath: '$(System.DefaultWorkingDirectory)'
         extractTars: true
-    - script: tree $(System.DefaultWorkingDirectory)
 
-    - task: Docker@2
-      displayName: Build and push an image to container registry
+    - task: DownloadSecureFile@1
+      name: DownloadSecureFile
+      displayName: Adding .env file
       inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
-        dockerfile: $(System.DefaultWorkingDirectory)/extracted_tars/webapp/Dockerfile
-        containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
+        secureFile: .env
+        
+    - script: mv $(DownloadSecureFile.secureFilePath) $(System.DefaultWorkingDirectory)/extracted_tars/webapp/
+      displayName: moving env file into working directory
+      
+    - script: cat $(System.DefaultWorkingDirectory)/extracted_tars/webapp/.env
+    # - task: Docker@2
+    #   displayName: Build and push an image to container registry
+    #   inputs:
+    #     command: buildAndPush
+    #     repository: $(imageRepository)
+    #     dockerfile: $(System.DefaultWorkingDirectory)/extracted_tars/webapp/Dockerfile
+    #     containerRegistry: $(dockerRegistryServiceConnection)
+    #     tags: |
+    #       $(tag)
