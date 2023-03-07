@@ -95,13 +95,13 @@ stages:
     - script: mv $(DownloadSecureFile.secureFilePath) $(System.DefaultWorkingDirectory)/extracted_tars/webapp/
       displayName: moving env file into working directory
       
-    - script: cat $(System.DefaultWorkingDirectory)/extracted_tars/webapp/.env
-    # - task: Docker@2
-    #   displayName: Build and push an image to container registry
-    #   inputs:
-    #     command: buildAndPush
-    #     repository: $(imageRepository)
-    #     dockerfile: $(System.DefaultWorkingDirectory)/extracted_tars/webapp/Dockerfile
-    #     containerRegistry: $(dockerRegistryServiceConnection)
-    #     tags: |
-    #       $(tag)
+    - script: ls -al $(System.DefaultWorkingDirectory)/extracted_tars/webapp/
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(System.DefaultWorkingDirectory)/extracted_tars/webapp/Dockerfile
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
