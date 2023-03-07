@@ -69,7 +69,7 @@ stages:
 
 
 
-- stage: Building Docker image
+- stage: Building_Docker_Image
   displayName: Building/pushing docker image stage
   jobs:
   - job: Build
