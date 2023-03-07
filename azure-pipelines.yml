@@ -71,7 +71,7 @@ stages:
 - stage: Building_Docker_Image
   displayName: Building/pushing docker image stage
   jobs:
-  - job: Build
+  - job: Build_And_Push_Docker_Image
     displayName: Build
     pool:
       vmImage: $(vmImageName)
@@ -105,3 +105,25 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+
+  - deployment: Deployment
+    dependsOn: Build_And_Push_Docker_Image
+    condition: succeeded()
+    strategy:
+     runOnce:
+       deploy:
+         steps:
+          - task: AzureRmWebAppDeployment@4
+            inputs:
+              ConnectionType: 'AzureRM'
+              azureSubscription: 'Azure subscription 1(6edb3a33-7950-49f2-82f5-3c8375f8ad09)'
+              appType: 'webAppContainer'
+              WebAppName: 'basic-express'
+              deployToSlotOrASE: true
+              ResourceGroupName: 'ps'
+              SlotName: 'production'
+              DockerNamespace: 'mrhazzar.azurecr.io'
+              DockerRepository: 'users-api'
+              DockerImageTag: '39'
+              StartupCommand: 'yarn start'
+              AppSettings: '-Port 4000'
