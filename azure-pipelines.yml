@@ -107,6 +107,7 @@ stages:
           $(tag)
 
   - deployment: Deployment
+    environment: production
     dependsOn: Build_And_Push_Docker_Image
     condition: succeeded()
     strategy:
