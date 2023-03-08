@@ -6,8 +6,13 @@ app.use(express.json());
 
 // 🏚️ Default Route
 // This is the Default Route of the API
+const startTime = new Date()
 app.get('/', async (req: Request, res: Response) => {
-    res.json({ message: 'Hello. Your app is live and well.' });
+    res.json({ 
+        message: 'Hello. Your app is live and well.',
+        startedAt: startTime.toISOString(),
+        currTime: new Date().toISOString()
+    });
 });
 
 // Create new user
