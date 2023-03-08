@@ -127,3 +127,6 @@ stages:
               DockerRepository: 'users-api'
               DockerImageTag: '$(tag)'
               StartupCommand: 'yarn start'
+              AppSettings: '-Port 4000'
+
+
