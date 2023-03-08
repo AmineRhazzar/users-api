@@ -122,7 +122,7 @@ stages:
               WebAppName: 'basic-express'
               deployToSlotOrASE: true
               ResourceGroupName: 'ps'
-              SlotName: 'production'
+              SlotName: 'staging'
               DockerNamespace: 'mrhazzar.azurecr.io'
               DockerRepository: 'users-api'
               DockerImageTag: '$(tag)'
