@@ -19,52 +19,52 @@ variables:
   vmImageName: 'ubuntu-latest'
 
 stages:
-# - stage: CI
-#   displayName: Continuous integration 
-#   jobs:
-#     - job: Testing_app
-#       displayName: Testing your NodeJS app
-#       pool:
-#         vmImage: $(vmImageName)
-#       steps:
-#         - task: NodeTool@0
-#           inputs:
-#             versionSource: 'spec'
-#             versionSpec: '16.x'
+- stage: CI
+  displayName: Continuous integration 
+  jobs:
+    - job: Testing_app
+      displayName: Testing your NodeJS app
+      pool:
+        vmImage: $(vmImageName)
+      steps:
+        - task: NodeTool@0
+          inputs:
+            versionSource: 'spec'
+            versionSpec: '16.x'
 
-#         - script: yarn 
-#           displayName: Installing dependencies
+        - script: yarn 
+          displayName: Installing dependencies
           
-#         - script: yarn run test
-#           displayName: running tests
+        - script: yarn run test
+          displayName: running tests
       
-#     - job: Building_app
-#       dependsOn: Testing_app
-#       condition: succeeded()
-#       displayName: Building your NodeJS app
-#       pool:
-#         vmImage: $(vmImageName)
-#       steps:
-#         - task: NodeTool@0
-#           inputs:
-#             versionSource: 'spec'
-#             versionSpec: '16.x'
+    - job: Building_app
+      dependsOn: Testing_app
+      condition: succeeded()
+      displayName: Building your NodeJS app
+      pool:
+        vmImage: $(vmImageName)
+      steps:
+        - task: NodeTool@0
+          inputs:
+            versionSource: 'spec'
+            versionSpec: '16.x'
             
-#         - script: yarn
-#           displayName: installing dependencies
+        - script: yarn
+          displayName: installing dependencies
           
-#         - script: yarn run build
-#           displayName: building the app
+        - script: yarn run build
+          displayName: building the app
           
-#         - script: rm -rf $(Build.SourcesDirectory)/node_modules
-#           displayName: deleting node_modules
+        - script: rm -rf $(Build.SourcesDirectory)/node_modules
+          displayName: deleting node_modules
 
-#         - task: PublishBuildArtifacts@1
-#           inputs:
-#             PathtoPublish: '$(Build.SourcesDirectory)'
-#             ArtifactName: 'webapp'
-#             publishLocation: 'Container'
-#             StoreAsTar: true
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: '$(Build.SourcesDirectory)'
+            ArtifactName: 'webapp'
+            publishLocation: 'Container'
+            StoreAsTar: true
 
 
 
