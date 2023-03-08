@@ -7,7 +7,7 @@ app.use(express.json());
 // 🏚️ Default Route
 // This is the Default Route of the API
 app.get('/', async (req: Request, res: Response) => {
-    res.json({ message: 'Hello from Express x Prisma!' });
+    res.json({ message: 'Hello. Your app is live and well.' });
 });
 
 // Create new user
